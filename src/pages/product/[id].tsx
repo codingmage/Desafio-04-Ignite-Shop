@@ -6,7 +6,7 @@ import {
 import axios from 'axios'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+/* import { useRouter } from 'next/router' */
 import { useState } from 'react'
 import Stripe from 'stripe'
 import { stripe } from '../../lib/stripe'
