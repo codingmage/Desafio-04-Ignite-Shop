@@ -51,13 +51,6 @@ export default function Home({ products }: HomeProps) {
             </Link>
           )
         })}
-        {/* <Product className="keen-slider__slide">
-        <Image src={camiseta1} width={520} height={480} alt="" />
-        <footer>
-          <strong>Camiseta X</strong>
-          <span>R$ 79,90</span>
-        </footer>
-      </Product> */}
       </HomeContainer>
     </>
   )

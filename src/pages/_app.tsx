@@ -1,18 +1,72 @@
 import type { AppProps } from 'next/app'
 import { globalStyles } from '../styles/global'
 import logoImg from '../assets/logo.svg'
-import { Container, Header } from '../styles/pages/app'
+import { BagButton, Container, Header } from '../styles/pages/app'
 import Image from 'next/image'
+import { Bag } from 'phosphor-react'
+import { CartProvider } from 'use-shopping-cart'
+import * as Dialog from '@radix-ui/react-dialog'
+import CartModal from '../components/CartModal'
+import Link from 'next/link'
 
 globalStyles()
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Container>
-      <Header>
-        <Image src={logoImg} alt="" />
-      </Header>
-      <Component {...pageProps} />
-    </Container>
+    <CartProvider
+      shouldPersist
+      /* mode="payment" */
+      cartMode="checkout-session"
+      stripe={process.env.STRIPE_PUBLIC_KEY}
+      currency="BRL"
+    >
+      <Container>
+        <Header>
+          <Link href={'/'}>
+            <Image src={logoImg} alt="" />
+          </Link>
+
+          <Dialog.Root>
+            <Dialog.Trigger asChild>
+              <BagButton>
+                <Bag size={24} />
+              </BagButton>
+            </Dialog.Trigger>
+
+            <CartModal />
+
+            {/* <Dialog.Portal>
+              <ModalOverlay />
+
+              <ModalContent>
+                <Dialog.Close>
+                  <X size={24} />
+                </Dialog.Close>
+
+                <Dialog.Title>Sacola de compras</Dialog.Title>
+
+                <ul>
+                  <li>Abacaxi</li>
+                  <li>Banana</li>
+                  <li>Morango</li>
+                </ul>
+
+                <div>
+                  <p>
+                    Quantidade <span>3 items </span>
+                  </p>
+                  <p>
+                    Valor total <span>R$ 270,00</span>
+                  </p>
+                </div>
+
+                <button>Finalizar a compra</button>
+              </ModalContent>
+            </Dialog.Portal> */}
+          </Dialog.Root>
+        </Header>
+        <Component {...pageProps} />
+      </Container>
+    </CartProvider>
   )
 }
