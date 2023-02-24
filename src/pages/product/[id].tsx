@@ -21,6 +21,7 @@ interface ProductProps {
     price: number
     description: string
     defaultPriceId: string
+    quantity: number
   }
 }
 
@@ -117,7 +118,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // buscar os produtos mais acessados/vendidos
   // fallback true é mais comum
 
-  /*  return {
+  return {
     paths: [
       {
         params: { id: 'prod_NMbFUmbhTpfkkc' },
@@ -126,9 +127,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: true,
   }
 }
- */
 
-  return {
+/*   return {
     paths: [
       {
         params: { id: 'prod_NMbFUmbhTpfkkc' },
@@ -136,7 +136,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     ],
     fallback: 'blocking',
   }
-}
+} */
 
 export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
   params,
