@@ -63,6 +63,6 @@ export const CheckoutImageContainer = styled('div', {
   },
 
   'div:first-of-type': {
-    backgroundColor: 'Purple',
+    marginLeft: '0',
   },
 })

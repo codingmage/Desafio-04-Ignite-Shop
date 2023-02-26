@@ -13,6 +13,7 @@ export default function CartModal() {
     formattedTotalPrice,
     incrementItem,
     decrementItem,
+    clearCart,
   } = useShoppingCart()
 
   const formattedData = Object.entries(cartDetails).map(([key, value]) => {
@@ -36,6 +37,8 @@ export default function CartModal() {
       const { checkoutUrl } = response.data
 
       window.location.href = checkoutUrl
+
+      clearCart()
     } catch (err) {
       alert('Falha ao redirecionar ao checkout!')
     }
