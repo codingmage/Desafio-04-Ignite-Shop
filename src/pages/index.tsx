@@ -9,13 +9,14 @@ import { stripe } from '../lib/stripe'
 import { /* GetServerSideProps */ GetStaticProps } from 'next'
 import Stripe from 'stripe'
 import Link from 'next/link'
+import { useShoppingCart, formatCurrencyString } from 'use-shopping-cart'
 
 interface HomeProps {
   products: {
     id: string
     name: string
     imageUrl: string
-    price: string
+    price: number
   }[]
 }
 
@@ -26,6 +27,19 @@ export default function Home({ products }: HomeProps) {
       spacing: 48,
     },
   })
+
+  const { addItem } = useShoppingCart()
+
+  function handleBuyThisItem(product) {
+    addItem({
+      name: product.name,
+      id: product.id,
+      price: product.price,
+      currency: 'BRL',
+      image: product.imageUrl,
+      price_id: product.defaultPriceId,
+    })
+  }
 
   return (
     <>
@@ -40,12 +54,27 @@ export default function Home({ products }: HomeProps) {
               href={`./product/${product.id}`}
               key={product.id}
               prefetch={false}
+              passHref
             >
               <Product className="keen-slider__slide">
                 <Image src={product.imageUrl} width={520} height={480} alt="" />
                 <footer>
                   <strong>{product.name}</strong>
-                  <span>{product.price}</span>
+                  <span>
+                    {formatCurrencyString({
+                      value: product.price,
+                      currency: 'BRL',
+                    })}
+                  </span>
+                  <button
+                    onClick={(event) => {
+                      event.preventDefault()
+                      event.stopPropagation()
+                      handleBuyThisItem(product)
+                    }}
+                  >
+                    Ayo
+                  </button>
                 </footer>
               </Product>
             </Link>
@@ -68,10 +97,16 @@ export const getStaticProps: GetStaticProps = async () => {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: new Intl.NumberFormat('pt-BR', {
+      /*       price: new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
-      }).format(price.unit_amount! / 100),
+      }).format(price.unit_amount! / 100), */
+      price: price.unit_amount,
+      /*         price: new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format(price.unit_amount! / 100), */
+      defaultPriceId: price.id,
     }
   })
 

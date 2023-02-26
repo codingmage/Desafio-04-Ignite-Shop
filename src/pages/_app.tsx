@@ -1,13 +1,8 @@
 import type { AppProps } from 'next/app'
 import { globalStyles } from '../styles/global'
-import logoImg from '../assets/logo.svg'
-import { BagButton, Container, Header } from '../styles/pages/app'
-import Image from 'next/image'
-import { Bag } from 'phosphor-react'
+import { Container } from '../styles/pages/app'
 import { CartProvider } from 'use-shopping-cart'
-import * as Dialog from '@radix-ui/react-dialog'
-import CartModal from '../components/CartModal'
-import Link from 'next/link'
+import Header from '../components/Header'
 
 globalStyles()
 
@@ -21,7 +16,8 @@ export default function App({ Component, pageProps }: AppProps) {
       currency="BRL"
     >
       <Container>
-        <Header>
+        <Header />
+        {/*         <Header>
           <Link href={'/'}>
             <Image src={logoImg} alt="" />
           </Link>
@@ -35,7 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
             <CartModal />
           </Dialog.Root>
-        </Header>
+        </Header> */}
         <Component {...pageProps} />
       </Container>
     </CartProvider>
