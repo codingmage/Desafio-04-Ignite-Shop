@@ -60,7 +60,7 @@ export const ModalContent = styled(DialogContent, {
     borderRadius: '6px',
   },
 
-  'button:first-of-type': {
+  'button:first-child': {
     padding: '0',
     color: '$gray300',
     width: '2rem',

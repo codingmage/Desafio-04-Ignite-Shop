@@ -3,12 +3,12 @@ import {
   ProductContainer,
   ProductDetails,
 } from '@/src/styles/pages/product'
-import axios from 'axios'
+/* import axios from 'axios' */
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-/* import { useRouter } from 'next/router' */
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+/* import { useState } from 'react' */
 import Stripe from 'stripe'
 import { useShoppingCart, formatCurrencyString } from 'use-shopping-cart'
 import { stripe } from '../../lib/stripe'
@@ -26,65 +26,27 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
-  const { addItem, cartDetails } = useShoppingCart()
+  const { addItem } = useShoppingCart()
 
   /* na maioria das vezes o estado de loading (skeleton page) é o recomendado:  */
-  /* const { isFallback } = useRouter()
+  const { isFallback } = useRouter()
 
   if (isFallback) {
     return <p>Loading...</p>
   }
- */
 
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
-    useState(false)
+  /*   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false) */
 
-  async function handleBuyproduct() {
+  function handleBuyproduct() {
     addItem({
       name: product.name,
       id: product.id,
       price: product.price,
       currency: 'BRL',
       image: product.imageUrl,
+      price_id: product.defaultPriceId,
     })
-
-    console.log(cartDetails)
-    // old code
-    /*     try {
-      setIsCreatingCheckoutSession(true)
-      const response = await axios.post('/api/checkout', {
-        priceId: product.defaultPriceId,
-      })
-
-      const { checkoutUrl } = response.data */
-    // old code
-    /* Se fosse redirecionar para rota interna:
-
-      const router = useRouter()
-
-      async function handleBuyproduct() {
-      try {
-
-      const response = await axios.post('/api/checkout', {
-        priceId: product.defaultPriceId,
-      })
-
-      const { checkoutUrl } = response.data
-
-      router.push('/checkout')
-
-      */
-    // redirecionar para rota externa
-    // old code
-    /*       window.location.href = checkoutUrl
-    } catch (err) {
-      // Conectar com alguma ferramenta de observibilidade (Datadog / Sentry)
-
-      setIsCreatingCheckoutSession(false)
-
-      alert('Falha ao redirecionar ao checkout!')
-    } */
-    // old code
   }
   return (
     <>
@@ -103,7 +65,7 @@ export default function Product({ product }: ProductProps) {
 
           <p>{product.description}</p>
           <button
-            disabled={isCreatingCheckoutSession}
+            /* disabled={isCreatingCheckoutSession} */
             onClick={handleBuyproduct}
           >
             Comprar agora

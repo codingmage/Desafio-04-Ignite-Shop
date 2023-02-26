@@ -1,4 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog'
+import axios from 'axios'
 import Image from 'next/image'
 import { X } from 'phosphor-react'
 import { useShoppingCart } from 'use-shopping-cart'
@@ -22,8 +23,25 @@ export default function CartModal() {
       formattedPrice: value.formattedPrice,
       priceId: value.price_id,
       quantity: value.quantity,
+      price: value.price,
     }
   })
+
+  async function handleCheckout() {
+    try {
+      const response = await axios.post('/api/checkout', {
+        formattedData,
+      })
+
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl
+    } catch (err) {
+      alert('Falha ao redirecionar ao checkout!')
+    }
+  }
+
+  // mapear carrinho no line_items do checkout?
 
   return (
     <Dialog.Portal>
@@ -44,8 +62,10 @@ export default function CartModal() {
                 <p>{shirt.name}</p>
                 <span>{shirt.formattedPrice}</span>
                 <p>Quantidade: {shirt.quantity}</p>
-                <button onClick={() => incrementItem(shirt.id)}>Add</button>
-                <button onClick={() => decrementItem(shirt.id)}>Remove</button>
+                <button onClick={() => incrementItem(shirt.id)}>
+                  Adicionar
+                </button>
+                <button onClick={() => decrementItem(shirt.id)}>Reduzir</button>
                 <button onClick={() => removeItem(shirt.id)}>
                   {' '}
                   Excluir item
@@ -64,7 +84,7 @@ export default function CartModal() {
           </p>
         </div>
 
-        <button>Finalizar a compra</button>
+        <button onClick={handleCheckout}>Finalizar a compra</button>
       </ModalContent>
     </Dialog.Portal>
   )
