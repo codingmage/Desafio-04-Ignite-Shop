@@ -70,3 +70,11 @@ export const ModalContent = styled(DialogContent, {
     backgroundColor: '$gray800',
   },
 })
+
+export const EmptyCartContainer = styled('span', {
+  flexGrow: 1,
+  alignSelf: 'center',
+  marginTop: '10rem',
+  fontWeight: 'bold',
+  fontSize: '$lg',
+})

@@ -3,7 +3,7 @@ import axios from 'axios'
 import Image from 'next/image'
 import { X } from 'phosphor-react'
 import { useShoppingCart } from 'use-shopping-cart'
-import { ModalContent, ModalOverlay } from './styles'
+import { EmptyCartContainer, ModalContent, ModalOverlay } from './styles'
 
 export default function CartModal() {
   const {
@@ -27,6 +27,8 @@ export default function CartModal() {
       price: value.price,
     }
   })
+
+  const isCartEmpty = cartCount === 0
 
   async function handleCheckout() {
     try {
@@ -57,7 +59,33 @@ export default function CartModal() {
 
         <Dialog.Title>Sacola de compras</Dialog.Title>
 
-        <ul>
+        {isCartEmpty ? (
+          <EmptyCartContainer> Seu carrinho está vazio </EmptyCartContainer>
+        ) : (
+          <ul>
+            {formattedData.map((shirt) => {
+              return (
+                <li key={shirt.priceId}>
+                  <Image src={shirt.image} alt="" width={120} height={90} />
+                  <p>{shirt.name}</p>
+                  <span>{shirt.formattedPrice}</span>
+                  <p>Quantidade: {shirt.quantity}</p>
+                  <button onClick={() => incrementItem(shirt.id)}>
+                    Adicionar
+                  </button>
+                  <button onClick={() => decrementItem(shirt.id)}>
+                    Reduzir
+                  </button>
+                  <button onClick={() => removeItem(shirt.id)}>
+                    {' '}
+                    Excluir item
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+        {/* <ul>
           {formattedData.map((shirt) => {
             return (
               <li key={shirt.priceId}>
@@ -76,7 +104,7 @@ export default function CartModal() {
               </li>
             )
           })}
-        </ul>
+        </ul> */}
 
         <div>
           <p>
