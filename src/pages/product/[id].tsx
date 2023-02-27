@@ -3,12 +3,10 @@ import {
   ProductContainer,
   ProductDetails,
 } from '@/src/styles/pages/product'
-/* import axios from 'axios' */
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-/* import { useState } from 'react' */
 import Stripe from 'stripe'
 import { useShoppingCart, formatCurrencyString } from 'use-shopping-cart'
 import { stripe } from '../../lib/stripe'
@@ -64,12 +62,7 @@ export default function Product({ product }: ProductProps) {
           </span>
 
           <p>{product.description}</p>
-          <button
-            /* disabled={isCreatingCheckoutSession} */
-            onClick={handleBuyproduct}
-          >
-            Colocar na sacola
-          </button>
+          <button onClick={handleBuyproduct}>Colocar na sacola</button>
         </ProductDetails>
       </ProductContainer>
     </>
@@ -89,16 +82,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: true,
   }
 }
-
-/*   return {
-    paths: [
-      {
-        params: { id: 'prod_NMbFUmbhTpfkkc' },
-      },
-    ],
-    fallback: 'blocking',
-  }
-} */
 
 export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
   params,
@@ -121,10 +104,6 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         name: product.name,
         imageUrl: product.images[0],
         price: price.unit_amount,
-        /*         price: new Intl.NumberFormat('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        }).format(price.unit_amount! / 100), */
         description: product.description,
         defaultPriceId: price.id,
       },

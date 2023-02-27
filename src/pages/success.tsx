@@ -104,10 +104,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       singleProductName: {
         name: singleProductName.name,
       },
-      /*       product: {
-        name: product.name,
-        imageUrl: product.images[0],
-      }, */
       singleProductQuantity,
       cartLength,
     },

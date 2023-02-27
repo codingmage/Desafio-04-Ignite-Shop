@@ -17,21 +17,6 @@ export default function App({ Component, pageProps }: AppProps) {
     >
       <Container>
         <Header />
-        {/*         <Header>
-          <Link href={'/'}>
-            <Image src={logoImg} alt="" />
-          </Link>
-
-          <Dialog.Root>
-            <Dialog.Trigger asChild>
-              <BagButton>
-                <Bag size={24} />
-              </BagButton>
-            </Dialog.Trigger>
-
-            <CartModal />
-          </Dialog.Root>
-        </Header> */}
         <Component {...pageProps} />
       </Container>
     </CartProvider>
