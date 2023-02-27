@@ -3,7 +3,17 @@ import axios from 'axios'
 import Image from 'next/image'
 import { X } from 'phosphor-react'
 import { useShoppingCart } from 'use-shopping-cart'
-import { EmptyCartContainer, ModalContent, ModalOverlay } from './styles'
+import {
+  ButtonContainer,
+  BuyButton,
+  CartTotalDetails,
+  CloseButton,
+  EmptyCartContainer,
+  ImageContainer,
+  ModalContent,
+  ModalOverlay,
+  ShirtContainer,
+} from './styles'
 
 export default function CartModal() {
   const {
@@ -46,76 +56,63 @@ export default function CartModal() {
     }
   }
 
-  // mapear carrinho no line_items do checkout?
-
   return (
     <Dialog.Portal>
       <ModalOverlay />
 
       <ModalContent>
-        <Dialog.Close>
+        <CloseButton>
           <X size={24} />
-        </Dialog.Close>
+        </CloseButton>
 
         <Dialog.Title>Sacola de compras</Dialog.Title>
 
         {isCartEmpty ? (
-          <EmptyCartContainer> Seu carrinho está vazio </EmptyCartContainer>
+          <EmptyCartContainer> Seu carrinho está vazio. </EmptyCartContainer>
         ) : (
           <ul>
             {formattedData.map((shirt) => {
               return (
-                <li key={shirt.priceId}>
-                  <Image src={shirt.image} alt="" width={120} height={90} />
-                  <p>{shirt.name}</p>
-                  <span>{shirt.formattedPrice}</span>
-                  <p>Quantidade: {shirt.quantity}</p>
-                  <button onClick={() => incrementItem(shirt.id)}>
-                    Adicionar
-                  </button>
-                  <button onClick={() => decrementItem(shirt.id)}>
-                    Reduzir
-                  </button>
-                  <button onClick={() => removeItem(shirt.id)}>
-                    {' '}
-                    Excluir item
-                  </button>
-                </li>
+                <ShirtContainer key={shirt.priceId}>
+                  <ImageContainer>
+                    <Image src={shirt.image} alt="" width={120} height={90} />
+                  </ImageContainer>
+                  <div>
+                    <p>{shirt.name}</p>
+                    <span>{shirt.formattedPrice}</span>
+                    <p>Quantidade: {shirt.quantity}</p>
+                    <ButtonContainer>
+                      <button onClick={() => incrementItem(shirt.id)}>
+                        Adicionar
+                      </button>
+                      <button onClick={() => decrementItem(shirt.id)}>
+                        Reduzir
+                      </button>
+                      <button onClick={() => removeItem(shirt.id)}>
+                        Excluir item
+                      </button>
+                    </ButtonContainer>
+                  </div>
+                </ShirtContainer>
               )
             })}
           </ul>
         )}
-        {/* <ul>
-          {formattedData.map((shirt) => {
-            return (
-              <li key={shirt.priceId}>
-                <Image src={shirt.image} alt="" width={120} height={90} />
-                <p>{shirt.name}</p>
-                <span>{shirt.formattedPrice}</span>
-                <p>Quantidade: {shirt.quantity}</p>
-                <button onClick={() => incrementItem(shirt.id)}>
-                  Adicionar
-                </button>
-                <button onClick={() => decrementItem(shirt.id)}>Reduzir</button>
-                <button onClick={() => removeItem(shirt.id)}>
-                  {' '}
-                  Excluir item
-                </button>
-              </li>
-            )
-          })}
-        </ul> */}
-
-        <div>
+        <CartTotalDetails>
           <p>
-            Quantidade <span>{cartCount}</span>
+            Quantidade{' '}
+            <span>
+              {cartCount} {cartCount === 1 ? 'item' : 'items'}
+            </span>
           </p>
           <p>
             Valor total <span>{formattedTotalPrice}</span>
           </p>
-        </div>
+        </CartTotalDetails>
 
-        <button onClick={handleCheckout}>Finalizar a compra</button>
+        <BuyButton disabled={isCartEmpty} onClick={handleCheckout}>
+          Finalizar a compra
+        </BuyButton>
       </ModalContent>
     </Dialog.Portal>
   )

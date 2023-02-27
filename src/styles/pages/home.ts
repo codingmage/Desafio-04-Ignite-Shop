@@ -31,20 +31,24 @@ export const Product = styled('div', {
     left: '0.25rem',
     right: '0.25rem',
     padding: '2rem',
+    display: 'flex',
+    justifyContent: 'space-between',
 
     borderRadius: 6,
-
-    display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
 
     transform: 'translateY(110%)',
     opacity: 0,
     transition: 'all 0.2s ease-in-out',
 
+    div: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+
     strong: {
-      fontSize: '$lg',
+      fontSize: '$md',
       color: '$gray100',
     },
 
@@ -60,5 +64,25 @@ export const Product = styled('div', {
       transform: 'translateY(0%)',
       opacity: 1,
     },
+  },
+})
+
+export const AddToCartButton = styled('button', {
+  boxSizing: 'border-box',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '0.1rem 0.6rem',
+  backgroundColor: '$green500',
+  borderRadius: '6px',
+  border: 'none',
+  color: 'white',
+  cursor: 'pointer',
+  width: '3rem',
+  height: '3rem',
+
+  '&:hover': {
+    backgroundColor: '$green300',
+    color: '$gray100',
   },
 })
